@@ -13,8 +13,8 @@ const dataJson = JSON.parse(fileData)
 const JWT_SECRET = "MY_SECRET_KEY"
 
 todoRouter.get('/', authMiddleware, (req, res) => {
-    try {
 
+    try {
         res.status(200).json({
             success: true,
             data: dataJson
@@ -28,7 +28,7 @@ todoRouter.get('/', authMiddleware, (req, res) => {
 })
 
 
-todoRouter.get('/:todoId', (req, res) => {
+todoRouter.get('/:todoId', authMiddleware, (req, res) => {
     try {
         const id = req.params.todoId
         let result = dataJson.filter((el) => el.id === (id))
@@ -43,7 +43,7 @@ todoRouter.get('/:todoId', (req, res) => {
     }
 })
 
-todoRouter.post('/', (req, res) => {
+todoRouter.post('/', authMiddleware, (req, res) => {
     try {
         const data = req.body
         const newData = {
@@ -68,7 +68,7 @@ todoRouter.post('/', (req, res) => {
 
 })
 
-todoRouter.put('/:todoId', (req, res) => {
+todoRouter.put('/:todoId', authMiddleware, (req, res) => {
     try {
 
         const data = req.body
@@ -88,7 +88,7 @@ todoRouter.put('/:todoId', (req, res) => {
 
 })
 
-todoRouter.delete('/:todoId', (req, res) => {
+todoRouter.delete('/:todoId', authMiddleware, (req, res) => {
     try {
         const id = req.params.todoId
         console.log("🚀 ~ file: todoRouter.js:69 ~ todoRouter.delete ~ id:", id)
