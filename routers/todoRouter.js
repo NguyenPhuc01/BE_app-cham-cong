@@ -3,14 +3,18 @@ import fs from 'fs'
 import path from 'path'
 import { v4 as uuidv4 } from 'uuid';
 import loggerMiddleware from '../middlewares/loggerMiddleware.js';
+import jwt from 'jsonwebtoken'
+import authMiddleware from '../middlewares/authMiddleware.js';
+
 const todoRouter = express.Router();
 const todoPath = path.join("resources", "todoResource.json")
 const fileData = fs.readFileSync(todoPath, 'utf8')
 const dataJson = JSON.parse(fileData)
+const JWT_SECRET = "MY_SECRET_KEY"
 
-todoRouter.get('/', loggerMiddleware, (req, res) => {
+todoRouter.get('/', authMiddleware, (req, res) => {
     try {
-        console.log('aaaaaa');
+
         res.status(200).json({
             success: true,
             data: dataJson
