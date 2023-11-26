@@ -1,31 +1,66 @@
 import express from 'express'
-import { MongoClient } from 'mongodb'
-
+import { client, teacherCollection } from '../config/connectDB.js';
+import { ObjectId } from 'mongodb';
 const router = express.Router();
 router.get('/', async function (req, res) {
-    const mongodbUrl = 'mongodb+srv://phucnguyendx9012:Phuc2001@cluster0.ex67or6.mongodb.net/'
-    const client = new MongoClient(mongodbUrl)
 
     try {
         await client.connect()
         console.log('connect to MongoDB successfully');
 
-        const teacherCollection = client.db('appChamCong').collection('teachers')
+
         const teacher = await teacherCollection.find().toArray()
         res.json(teacher)
+        // res.send('oke')
     } catch (error) {
-
+        res.json({
+            success: false,
+            error: error
+        })
     }
 
 })
 router.get('/edit', function (req, res) {
 
 })
-router.get('/create', function (req, res) {
+router.post('/create', async function (req, res) {
+    const teacherData = req.body
+    try {
+        await client.connect()
+        const result = await teacherCollection.insertOne(req.body)
+        res.status(200).json({
+            success: true,
+            data: {
+                teacherData,
+
+            }
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            error: error
+        })
+    }
 
 })
-router.get('/update', function (req, res) {
+router.put('/', async function (req, res) {
+    const dataUpdate = req.body
+    try {
+        await client.connect()
+        await teacherCollection.updateOne({ _id: ObjectId.createFromHexString(`${dataUpdate._id}`) }, {
+            $set:
+                { name: dataUpdate.name, age: dataUpdate.age, qty: dataUpdate.qty }
+        })
+        res.status(200).json({
+            success: true,
+            data: {
+                dataUpdate
+            }
+        })
 
+    } catch (error) {
+        res.status(400).json({ success: false, error })
+    }
 })
 
 export default router

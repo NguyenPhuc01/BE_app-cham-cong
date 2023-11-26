@@ -1,4 +1,4 @@
-const JWT_SECRET = "MY_SECRET_KEY"
+const JWT_SECRET = process.env.JWT_SECRET
 import jwt from 'jsonwebtoken'
 
 const authMiddleware = (req, res, next) => {

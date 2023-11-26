@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import jwt from 'jsonwebtoken'
-const JWT_SECRET = "MY_SECRET_KEY"
+const JWT_SECRET = process.env.JWT_SECRET
 import bcrypt from 'bcrypt'
 const users = []
 router.post('/login', function (req, res) {
