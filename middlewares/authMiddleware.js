@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
         req.user = email
         next()
     } catch (error) {
-        res.status(400).json({ message: error })
+        res.status(400).json({ message: 'unauthorized' })
     }
 }
 

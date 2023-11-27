@@ -1,8 +1,9 @@
 import express from 'express'
 import { client, teacherCollection } from '../config/connectDB.js';
 import { ObjectId } from 'mongodb';
+import authMiddleware from '../middlewares/authMiddleware.js';
 const router = express.Router();
-router.get('/', async function (req, res) {
+router.get('/', authMiddleware, async function (req, res) {
 
     try {
         await client.connect()
@@ -23,7 +24,7 @@ router.get('/', async function (req, res) {
 router.get('/edit', function (req, res) {
 
 })
-router.post('/create', async function (req, res) {
+router.post('/create', authMiddleware, async function (req, res) {
     const teacherData = req.body
     try {
         await client.connect()
