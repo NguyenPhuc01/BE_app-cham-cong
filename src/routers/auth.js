@@ -1,9 +1,9 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
-import bcrypt from 'bcryptjs';
-import { authCollection } from '../config/connectDB.js';
+const bcrypt = require('bcryptjs');
+const { authCollection } = require('../config/connectDB.js');
 const users = [];
 router.post('/login', async function (req, res) {
   try {
@@ -74,5 +74,4 @@ router.post('/register', async function (req, res) {
     });
   }
 });
-
-export default router;
+module.exports = router;

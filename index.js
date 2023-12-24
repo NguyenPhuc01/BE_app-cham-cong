@@ -1,11 +1,11 @@
-import express from 'express';
-import authRouter from './src/routers/auth.js';
-import studentRouter from './src/routers/student.js';
-import teacherRouter from './src/routers/teacher.js';
+const express = require('express');
+const authRouter = require('./src/routers/auth.js');
+const studentRouter = require('./src/routers/student.js');
+const teacherRouter = require('./src/routers/teacher.js');
 
-import { config } from 'dotenv';
-import { client } from './src/config/connectDB.js';
-config();
+const dotenv = require('dotenv');
+const { client } = require('./src/config/connectDB.js');
+dotenv.config();
 const app = express();
 async function main() {
   try {
