@@ -1,5 +1,4 @@
-const express = require('express');
-const authRouter = require('./src/routers/auth.js');
+const express = require('express');const authRouter = require('./src/routers/auth.js');
 const studentRouter = require('./src/routers/student.js');
 const teacherRouter = require('./src/routers/teacher.js');
 
@@ -36,5 +35,7 @@ async function main() {
   }
 }
 
-main();
+main().catch(error => {
+  console.error('Unexpected error occurred:', error);
+});
 module.exports = app;
