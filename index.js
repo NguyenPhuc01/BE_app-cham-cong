@@ -1,11 +1,11 @@
-const express = require('express');
-const authRouter = require('./src/routers/auth.js');
+const express = require('express');const authRouter = require('./src/routers/auth.js');
 const studentRouter = require('./src/routers/student.js');
 const teacherRouter = require('./src/routers/teacher.js');
 
 const dotenv = require('dotenv');
 const { client } = require('./src/config/connectDB.js');
 dotenv.config();
+
 const app = express();
 async function main() {
   try {
