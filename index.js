@@ -1,8 +1,7 @@
 import express from 'express';
-import authRouter from './src/routers';
+import authRouter from './src/routers/auth.js';
 import studentRouter from './src/routers/student.js';
 import teacherRouter from './src/routers/teacher.js';
-import todoRouter from './src/routers/todoRouter.js';
 
 import { config } from 'dotenv';
 import { client } from './src/config/connectDB.js';
@@ -19,7 +18,6 @@ async function main() {
     app.use('/api/v1/auth', authRouter);
     app.use('/students', studentRouter);
     app.use('/teachers', teacherRouter);
-    app.use('/api/v1/todos', todoRouter);
     app.get('/', function (req, res) {
       res.send('Hello World');
     });
