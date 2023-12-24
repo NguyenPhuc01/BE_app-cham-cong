@@ -10,7 +10,12 @@ async function main() {
   try {
     console.log('111');
 
-    await client.connect();
+    try {
+      await client.connect();
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+    }
     console.log('file: index.js:7 ~ connect to MongoDB successfully');
 
     // const teacherCollection = client.db('appChamCong').collection('teachers')
@@ -35,7 +40,5 @@ async function main() {
   }
 }
 
-main().catch(error => {
-  console.error('Unexpected error occurred:', error);
-});
+main();
 module.exports = app;
