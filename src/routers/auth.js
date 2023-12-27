@@ -1,19 +1,20 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
 const bcrypt = require('bcryptjs');
-const { authCollection } = require('../config/connectDB.js');
-const users = [];
+const connectDB = require('../config/connectDB');
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET;
+
 router.post('/login', async function (req, res) {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ message: 'Email or password is missing' });
     }
-
+    const { authCollection } = await connectDB();
     const user = await authCollection.find({ email: email }).toArray();
-    console.log('🚀 ~ file: auth.js:15 ~ user:', user);
     if (!user) {
       return res.status(400).json({ message: 'user not found' });
     }
@@ -48,6 +49,8 @@ router.post('/register', async function (req, res) {
       const hashPassword = bcrypt.hashSync(password, 10);
 
       // users.push({ email: email, password: hashPassword })
+      const { authCollection } = await connectDB();
+
       const checkHasUser = await authCollection
         .find({ email: email })
         .toArray();
